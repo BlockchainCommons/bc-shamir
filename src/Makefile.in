@@ -1,0 +1,76 @@
+# @configure_input@
+
+# Package-specific substitution variables
+package = @PACKAGE_NAME@
+version = @PACKAGE_VERSION@
+tarname = @PACKAGE_TARNAME@
+libname = lib$(package).a
+
+# Prefix-specific substitution variables
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+
+# VPATH-specific substitution variables
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+CFLAGS = -g -O0
+ARFLAGS = rcs
+
+OBJS = hazmat.o interpolate.o shamir.o
+
+.PHONY: all
+all: $(libname) test
+
+$(libname): $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+
+interpolate.o: interpolate.h hazmat.h shamir-errors.h
+shamir.o: shamir.h hazmat.h interpolate.h shamir-errors.h
+
+TEST_OBJS = test.o test-utils.o
+LDFLAGS = -lbc-crypto-base
+
+test: $(libname) $(TEST_OBJS)
+
+test.o: test-utils.h
+test-utils.o: test-utils.h
+
+.PHONY: check
+check: all
+	./test
+	@echo "*** ALL TESTS PASSED ***"
+
+HEADERS = bc-shamir.h interpolate.h hazmat.h shamir-errors.h
+
+libdir = $(DESTDIR)/$(prefix)/lib
+includedir = $(DESTDIR)/$(prefix)/include/$(package)
+
+.PHONY: install
+install: $(libname)
+	install -d $(libdir)
+	install $(libname) $(libdir)
+	install -d $(includedir)
+	install $(HEADERS) $(includedir)
+
+.PHONY: uninstall
+uninstall:
+	rm -f $(libdir)/$(libname)
+	rm -f $(includedir)/bc-shamir.h
+	rm -f $(includedir)/interpolate.h
+	rm -f $(includedir)/hazmat.h
+	rm -f $(includedir)/shamir-errors.h
+	-rmdir $(libdir) >/dev/null 2>&1
+	-rmdir $(includedir) >/dev/null 2>&1
+
+.PHONY: clean
+clean:
+	rm -rf $(libname)
+	rm -f $(OBJS)
+	rm -f test $(TEST_OBJS)
+	rm -rf *.dSYM
+
+.PHONY: distclean
+distclean: clean
+	rm -f Makefile
