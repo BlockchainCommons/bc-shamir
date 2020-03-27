@@ -2,6 +2,8 @@
  * Low level API for Daan Sprenkels' Shamir secret sharing library
  * Copyright (c) 2017 Daan Sprenkels <hello@dsprenkels.com>
  *
+ * Licensed under the "MIT License"
+ *
  * Usage of this API is hazardous and is only reserved for beings with a
  * good understanding of the Shamir secret sharing scheme and who know how
  * crypto code is implemented. If you are unsure about this, use the

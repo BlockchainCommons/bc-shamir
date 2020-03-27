@@ -2,6 +2,9 @@
  * Implementation of the hazardous parts of the SSS library
  *
  * Author: Daan Sprenkels <hello@dsprenkels.com>
+ * Copyright (c) 2017 Daan Sprenkels <hello@dsprenkels.com>
+ *
+ * Licensed under the "MIT License"
  *
  * This code contains the actual Shamir secret sharing functionality. The
  * implementation of this code is based on the idea that the user likes to
