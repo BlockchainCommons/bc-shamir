@@ -1,5 +1,12 @@
 # @configure_input@
 
+#
+#  Makefile.in
+#
+#  Copyright © 2020 by Blockchain Commons, LLC
+#  Licensed under the "BSD-2-Clause Plus Patent License"
+#
+
 # Package-specific substitution variables
 package = @PACKAGE_NAME@
 version = @PACKAGE_VERSION@
