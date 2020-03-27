@@ -33,12 +33,12 @@ In most cases, the authors, copyright, and license for each file reside in heade
 
 This table below also establishes provenance (repository of origin, permalink, and commit id) for files included from repositories that are outside of this repository. Contributors to these files are listed in the commit history for each repository, first with changes found in the commit history of this repo, then in changes in the commit history of their repo of their origin.
 
-| File      | From                                                         | Commit                                                       | Authors & Copyright (c)                                | License                                                     | Notes                                                     |
-| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- |
-| hazmat.c | [dsprenkels/sss](https://github.com/dsprenkels/sss/blob/487021e257542fdb292300dfb411654103027b6c/hazmat.c) | [b613717](https://github.com/dsprenkels/sss/commit/b613717c2b849b497da7e77c313897fa2d59bb6f) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        | We have commented out sss_create_keyshares & sss_combine_keyshares. |
-| hazmat.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/blob/487021e257542fdb292300dfb411654103027b6c/hazmat.c) | [b613717](https://github.com/dsprenkels/sss/commit/b613717c2b849b497da7e77c313897fa2d59bb6f) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        |
+| File      | From                                                         | Commit                                                       | Authors & Copyright (c)                                | License                                                     | Notes                                                   |
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------- |
+| hazmat.c | [dsprenkels/sss](https://github.com/dsprenkels/sss/blob/487021e257542fdb292300dfb411654103027b6c/hazmat.c) | [b613717](https://github.com/dsprenkels/sss/commit/b613717c2b849b497da7e77c313897fa2d59bb6f) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html) |                        | We have commented out sss_create_keyshares & sss_combine_keyshares. |
+| hazmat.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/blob/487021e257542fdb292300dfb411654103027b6c/hazmat.c) | [b613717](https://github.com/dsprenkels/sss/commit/b613717c2b849b497da7e77c313897fa2d59bb6f) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html) |                      |
 | shamir.c | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        | We have commented out sss_create_keyshares & sss_combine_keyshares. |
-| shamir.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        |
+| shamir.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        | |
 
 ### Used with…
 
@@ -68,6 +68,7 @@ The following people directly contributed to this repository. You can add your n
 | ----------------- | ------------------- | ------------------------------------------------- | ------------------------------------- | -------------------------------------------------- |
 | Christopher Allen | Principal Architect | [@ChristopherA](https://github.com/@ChristopherA) | \<ChristopherA@LifeWithAlacrity.com\> | FDFE 14A5 4ECB 30FC 5D22  74EF F8D3 6C91 3574 05ED |
 | Wolf McNally      | Project Lead        | [@WolfMcNally](https://github.com/wolfmcnally)    | \<Wolf@WolfMcNally.com\>              | 9436 52EE 3844 1760 C3DC  3536 4B6C 2FCF 8947 80AE |
+| Chris Howe        | Occasional Contributor| [@howech](https://github.com/howech)            | \<chris@howeville.com\>               | 7C3D D38E 16D0 0275 5C0B  82B4 709C 6DA6 EAD3 99A7 |
 
 # Responsible Disclosure
 
