@@ -38,7 +38,7 @@ distdir: $(distdir)
 
 $(distdir): FORCE
 	mkdir -p $(distdir)/src
-	cp cla*.asc CLA.md CODEOWNERS CONTRIBUTING.md LICENSE README.md $(distdir)
+	cp CLA*.asc CLA.md CODEOWNERS CONTRIBUTING.md LICENSE README.md $(distdir)
 	cp $(srcdir)/bootstrap.sh $(distdir)
 	cp $(srcdir)/configure.ac $(distdir)
 	cp $(srcdir)/configure $(distdir)
