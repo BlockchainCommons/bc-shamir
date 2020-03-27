@@ -49,7 +49,7 @@ check: all
 	./test
 	@echo "*** ALL TESTS PASSED ***"
 
-HEADERS = bc-shamir.h interpolate.h hazmat.h shamir-errors.h
+HEADERS = bc-shamir.h shamir.h interpolate.h hazmat.h shamir-errors.h
 
 libdir = $(DESTDIR)/$(prefix)/lib
 includedir = $(DESTDIR)/$(prefix)/include/$(package)
@@ -67,6 +67,7 @@ uninstall:
 	rm -f $(includedir)/bc-shamir.h
 	rm -f $(includedir)/interpolate.h
 	rm -f $(includedir)/hazmat.h
+	rm -f $(includedir)/shamir.h
 	rm -f $(includedir)/shamir-errors.h
 	-rmdir $(libdir) >/dev/null 2>&1
 	-rmdir $(includedir) >/dev/null 2>&1
