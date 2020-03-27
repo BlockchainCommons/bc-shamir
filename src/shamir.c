@@ -1,3 +1,10 @@
+//
+//  shamir.c
+//
+//  Copyright © 2020 by Blockchain Commons, LLC
+//  Licensed under the "BSD-2-Clause Plus Patent License"
+//
+
 #include <string.h>
 #include <bc-crypto-base/bc-crypto-base.h>
 

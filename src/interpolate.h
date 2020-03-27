@@ -1,9 +1,8 @@
 //
 //  interpolate.h
-//  commons-sss
 //
-//  Created by Wolf McNally on 3/26/20.
-//  Copyright © 2020 Blockchain Commons. All rights reserved.
+//  Copyright © 2020 by Blockchain Commons, LLC
+//  Licensed under the "BSD-2-Clause Plus Patent License"
 //
 
 #ifndef INTERPOLATE_H
