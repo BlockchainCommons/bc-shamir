@@ -18,7 +18,7 @@ This sequence runs the module's unit tests.
 
 ## Use
 
-1. Link against `libbc_shamir.a` and `libbc_crypto_base.a`.
+1. Link against `libbc-shamir.a` and `libbc-crypto-base.a`.
 2. Include the umbrella header in your code:
 
 ```c
