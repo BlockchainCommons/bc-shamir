@@ -27,27 +27,14 @@ ARFLAGS = rcs
 
 OBJS = hazmat.o interpolate.o shamir.o
 
-.PHONY: all
-all: $(libname) test
+.PHONY: all lib
+all lib: $(libname)
 
 $(libname): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 interpolate.o: interpolate.h hazmat.h shamir-errors.h
 shamir.o: shamir.h hazmat.h interpolate.h shamir-errors.h
-
-TEST_OBJS = test.o test-utils.o
-LDFLAGS = -lbc-crypto-base
-
-test: $(libname) $(TEST_OBJS)
-
-test.o: test-utils.h
-test-utils.o: test-utils.h
-
-.PHONY: check
-check: all
-	./test
-	@echo "*** ALL TESTS PASSED ***"
 
 HEADERS = bc-shamir.h shamir.h interpolate.h hazmat.h shamir-errors.h
 
@@ -76,8 +63,6 @@ uninstall:
 clean:
 	rm -rf $(libname)
 	rm -f $(OBJS)
-	rm -f test $(TEST_OBJS)
-	rm -rf *.dSYM
 
 .PHONY: distclean
 distclean: clean
