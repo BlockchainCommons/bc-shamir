@@ -12,7 +12,7 @@
 #include "bc-shamir.h"
 #include "test-utils.h"
 
-size_t _test_split_secret(const char* secret, uint8_t threshold, uint8_t shard_count, char** output_shares) {
+static size_t _test_split_secret(const char* secret, uint8_t threshold, uint8_t shard_count, char** output_shares) {
   uint8_t* secret_data;
   size_t secret_len = hex_to_data(secret, &secret_data);
   size_t result_len = shard_count * secret_len;
@@ -30,7 +30,7 @@ size_t _test_split_secret(const char* secret, uint8_t threshold, uint8_t shard_c
   return secret_len;
 }
 
-char* _test_recover_secret(uint8_t threshold, const char** recovery_shares, const uint8_t* recovery_share_indexes) {
+static char* _test_recover_secret(uint8_t threshold, const char** recovery_shares, const uint8_t* recovery_share_indexes) {
   uint8_t* shares[threshold];
   size_t share_len;
   for(int i = 0; i < threshold; i++) {
@@ -49,7 +49,7 @@ char* _test_recover_secret(uint8_t threshold, const char** recovery_shares, cons
   return data_to_hex(secret_data, share_len);
 }
 
-void _test_shamir(const char* secret, uint8_t threshold, uint8_t shard_count, const uint8_t* recovery_share_indexes) {
+static void _test_shamir(const char* secret, uint8_t threshold, uint8_t shard_count, const uint8_t* recovery_share_indexes) {
   // printf("secret: %s\n", secret);
 
   char* output_shares[shard_count];
@@ -76,7 +76,7 @@ void _test_shamir(const char* secret, uint8_t threshold, uint8_t shard_count, co
   free(out_secret);
 }
 
-void test_shamir() {
+static void test_shamir() {
   _test_shamir("0ff784df000c4380a5ed683f7e6e3dcf", 3, 5, (uint8_t[]){1, 2, 4});
   _test_shamir("204188bfa6b440a1bdfd6753ff55a8241e07af5c5be943db917e3efabc184b1a", 2, 7, (uint8_t[]){3, 4});
 }
