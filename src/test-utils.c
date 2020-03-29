@@ -5,6 +5,11 @@
 //  Licensed under the "BSD-2-Clause Plus Patent License"
 //
 
+// Arduino has two problems with the tests:
+// 1. The test-utils are duplicated w/ other Blockchain Commons packages.
+// 2. The main routine conflicts w/ the actual main.
+#if !defined(ARDUINO)
+
 #include "test-utils.h"
 
 #include <string.h>
@@ -84,3 +89,5 @@ void fake_random(uint8_t *buf, size_t count) {
     b = b + 17;
   }
 }
+
+#endif // !defined(ARDUINO)
