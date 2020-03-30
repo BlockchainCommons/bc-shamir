@@ -6,7 +6,12 @@
 //
 
 #include <string.h>
+
+#ifdef ARDUINO
+#include "bc-crypto-base.h"
+#else
 #include <bc-crypto-base/bc-crypto-base.h>
+#endif
 
 #include "shamir.h"
 #include "interpolate.h"
