@@ -46,11 +46,11 @@ In most cases, the authors, copyright, and license for each file reside in heade
 This table below also establishes provenance (repository of origin, permalink, and commit id) for files included from repositories that are outside of this repository. Contributors to these files are listed in the commit history for each repository, first with changes found in the commit history of this repo, then in changes in the commit history of their repo of their origin.
 
 | File      | From                                                         | Commit                                                       | Authors & Copyright (c)                                | License                                                     | Notes                                                     |
-| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- |
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- | ---------------------- |
 | hazmat.c | [dsprenkels/sss](https://github.com/dsprenkels/sss/blob/487021e257542fdb292300dfb411654103027b6c/hazmat.c) | [b613717](https://github.com/dsprenkels/sss/commit/b613717c2b849b497da7e77c313897fa2d59bb6f) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        | We have commented out sss_create_keyshares & sss_combine_keyshares. |
 | hazmat.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/blob/487021e257542fdb292300dfb411654103027b6c/hazmat.c) | [b613717](https://github.com/dsprenkels/sss/commit/b613717c2b849b497da7e77c313897fa2d59bb6f) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        |
-| shamir.c | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        | We have commented out sss_create_keyshares & sss_combine_keyshares. |
-| shamir.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        |
+| shamir.c | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        | We have commented out sss_create_keyshares & sss_combine_keyshares. |
+| shamir.h | [dsprenkels/sss](https://github.com/dsprenkels/sss/) | | Copyright 2017 Daan Sprenkels <hello@dsprenkels.com>  | [MIT](https://spdx.org/licenses/MIT.html)                        |
 
 ### Used with…
 
@@ -68,9 +68,21 @@ The Blockchain Commons Shamir project is either derived from or was inspired by:
 
 - autotools - Gnu Build System from Free Software Foundation ([intro](https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html)).
 
+## Financial Support
+
+*Blockchain Commons Shamir Secret Sharing* is a project of [Blockchain Commons](https://www.blockchaincommons.com/). We are proudly a "not-for-profit" social benefit corporation committed to open source & open development. Our work is funded entirely by donations and collaborative partnerships with people like you. Every contribution will be spent on building open tools, technologies, and techniques that sustain and advance blockchain and internet security infrastructure and promote an open web.
+
+To financially support further development of *Blockchain Commons Shamir Secret Sharing* and other projects, please consider becoming a Patron of Blockchain Commons through ongoing monthly patronage as a [GitHub Sponsor](https://github.com/sponsors/BlockchainCommons). You can also support Blockchain Commons with bitcoins at our [BTCPay Server](https://btcpay.blockchaincommons.com/).
+
 ## Contributing
 
 We encourage public contributions through issues and pull-requests! Please review [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our development process. All contributions to this repository require a GPG signed [Contributor License Agreement](./CLA.md).
+
+### Questions & Support
+
+As an open-source, open-development community, Blockchain Commons does not have the resources to provide direct support of our projects. If you have questions or problems, please use this repository's [issues](./issues) feature. Unfortunately, we can not make any promises on response time.
+
+If your company requires support to use our projects, please feel free to contact us directly about options. We may be able to offer you a contract for support from one of our contributors, or we might be able to point you to another entity who can offer the contractual support that you need.
 
 ### Credits
 
