@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([bc-shamir], [0.1])
+AC_INIT([bc-shamir], [0.1.1])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
@@ -11,7 +11,7 @@ AC_PROG_CC
 AC_PROG_INSTALL
 
 # Checks for libraries.
-AC_CHECK_LIB([bc-crypto-base], [sha1_Raw], [], [
+AC_CHECK_LIB([bc-crypto-base], [sha256_Raw], [], [
   echo "### Error! libbc-crypto-base must be installed first."
   exit -1
   ])
