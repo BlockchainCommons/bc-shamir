@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 char* data_to_hex(uint8_t* in, size_t insz);
 bool hex_digit_to_bin(const char hex, char *out);
