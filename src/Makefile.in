@@ -43,8 +43,8 @@ shamir.o: shamir.h hazmat.h interpolate.h shamir-errors.h
 
 HEADERS = bc-shamir.h shamir.h interpolate.h hazmat.h shamir-errors.h
 
-libdir = $(DESTDIR)/$(prefix)/lib
-includedir = $(DESTDIR)/$(prefix)/include/$(package)
+libdir = $(DESTDIR)$(prefix)/lib
+includedir = $(DESTDIR)$(prefix)/include/$(package)
 
 .PHONY: install
 install: $(libname)
