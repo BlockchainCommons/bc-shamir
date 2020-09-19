@@ -46,7 +46,8 @@ int32_t split_secret(
     const uint8_t *secret,
     uint32_t secret_length,
     uint8_t *result,
-    void (*random_generator)(uint8_t *, size_t)
+    void* ctx,
+    void (*random_generator)(uint8_t *, size_t, void*)
 ) {
     if( shard_count > MAX_SHARD_COUNT) {
         return ERROR_TOO_MANY_SHARDS;
@@ -69,14 +70,14 @@ int32_t split_secret(
         uint8_t *share = result;
 
         for(uint8_t i=0; i< threshold-2; ++i, share+=secret_length) {
-            random_generator(share, secret_length);
+            random_generator(share, secret_length, ctx);
             x[n] = i;
             y[n] = share;
             n+=1;
         }
 
         // generate secret_length - 4 bytes worth of random data
-        random_generator(digest+4, secret_length-4);
+        random_generator(digest+4, secret_length-4, ctx);
         // put 4 bytes of digest at the top of the digest array
         create_digest(digest+4, secret_length-4, secret, secret_length, digest);
         x[n] = DIGEST_INDEX;

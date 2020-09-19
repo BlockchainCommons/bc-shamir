@@ -17,7 +17,7 @@ static size_t _test_split_secret(const char* secret, uint8_t threshold, uint8_t 
   size_t secret_len = hex_to_data(secret, &secret_data);
   size_t result_len = shard_count * secret_len;
   uint8_t result_data[result_len];
-  int32_t result = split_secret(threshold, shard_count, secret_data, secret_len, result_data, fake_random);
+  int32_t result = split_secret(threshold, shard_count, secret_data, secret_len, result_data, NULL, fake_random);
   assert(result == shard_count);
 
   for(int i = 0; i < shard_count; i++) {

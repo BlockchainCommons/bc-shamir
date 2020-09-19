@@ -49,6 +49,7 @@ uint8_t* create_digest(
  *         secret_length: length of the secret array. must be >= 16, <= 32 and even.
  *         result: place to store the resulting shares. Must be able to hold
  *                 share_count * secret_length bytes.
+ *         ctx: user-defined context to be passed to the random_generator function.
  */
 int32_t split_secret(
     uint8_t threshold,
@@ -56,7 +57,8 @@ int32_t split_secret(
     const uint8_t *secret,
     uint32_t secret_length,
     uint8_t *result,
-    void (*random_generator)(uint8_t *, size_t)
+    void* ctx,
+    void (*random_generator)(uint8_t *, size_t, void*)
 );
 
 /**
