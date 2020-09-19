@@ -18,6 +18,6 @@ size_t hex_to_data(const char *hex, uint8_t **out);
 bool equal_strings(const char* a, const char* b);
 void test_hex();
 
-void fake_random(uint8_t *buf, size_t count);
+void fake_random(uint8_t *buf, size_t count, void* ctx);
 
 #endif /* TEST_UTILS_H */
