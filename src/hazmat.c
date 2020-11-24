@@ -27,13 +27,10 @@
 void
 bitslice(uint32_t r[8], const uint8_t x[32])
 {
-    size_t bit_idx, arr_idx;
-    uint32_t cur;
-
     memset(r, 0, sizeof(uint32_t[8]));
-    for (arr_idx = 0; arr_idx < 32; arr_idx++) {
-        cur = (uint32_t) x[arr_idx];
-        for (bit_idx = 0; bit_idx < 8; bit_idx++) {
+    for (size_t arr_idx = 0; arr_idx < 32; arr_idx++) {
+        uint32_t cur = (uint32_t) x[arr_idx];
+        for (size_t bit_idx = 0; bit_idx < 8; bit_idx++) {
             r[bit_idx] |= ((cur & (1 << bit_idx)) >> bit_idx) << arr_idx;
         }
     }
@@ -43,14 +40,11 @@ bitslice(uint32_t r[8], const uint8_t x[32])
 void
 unbitslice(uint8_t r[32], const uint32_t x[8])
 {
-    size_t bit_idx, arr_idx;
-    uint32_t cur;
-
     memset(r, 0, sizeof(uint8_t[32]));
-    for (bit_idx = 0; bit_idx < 8; bit_idx++) {
-        cur = (uint32_t) x[bit_idx];
-        for (arr_idx = 0; arr_idx < 32; arr_idx++) {
-            r[arr_idx] |= ((cur & (1 << arr_idx)) >> arr_idx) << bit_idx;
+    for (size_t bit_idx = 0; bit_idx < 8; bit_idx++) {
+        uint32_t cur = (uint32_t) x[bit_idx];
+        for (size_t arr_idx = 0; arr_idx < 32; arr_idx++) {
+            r[arr_idx] |= ((cur & (((uint32_t)1) << arr_idx)) >> arr_idx) << bit_idx;
         }
     }
 }
@@ -61,7 +55,8 @@ bitslice_setall(uint32_t r[8], const uint8_t x)
 {
     size_t idx;
     for (idx = 0; idx < 8; idx++) {
-        r[idx] = ((int32_t) ((x & (1 << idx)) << (31 - idx))) >> 31;
+        // cppcheck-suppress shiftTooManyBitsSigned
+        r[idx] = ((int32_t) ((x & (((uint32_t)1) << idx)) << (31 - idx))) >> 31;
     }
 }
 
