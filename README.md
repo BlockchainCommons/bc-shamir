@@ -1,12 +1,14 @@
 # [Blockchain Commons Shamir Secret Sharing](https://github.com/BlockchainCommons/bc-shamir)
 
-**Implementation of Shamir Secret Sharing for use in [Blockchain Commons](https://www.BlockchainCommons.com) Software Projects**
+### _by Wolf McNally and Christopher Allen with Chris Howe_
+
+**Blockchain Commons Shamir Secret Sharing** is an implementation of Shamir Secret Sharing for use in [Blockchain Commons](https://www.BlockchainCommons.com) Software Projects.
 
 ## Prerequisites
 
 * If [`bc-crypto-base`](https://github.com/blockchaincommons/bc-crypto-base) is not installed, the `configure` step below will fail.
 
-## Installation
+## Installation Instructions
 
 This sequence also runs the module's unit tests.
 
@@ -38,7 +40,7 @@ $ make check
 $ sudo make install
 ```
 
-## Use
+## Usage Instructions
 
 1. Link against `libbc-shamir.a` and `libbc-crypto-base.a`.
 2. Include the umbrella header in your code:
