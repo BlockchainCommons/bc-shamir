@@ -1,6 +1,8 @@
 # [Blockchain Commons Shamir Secret Sharing](https://github.com/BlockchainCommons/bc-shamir)
 
-### _by Wolf McNally and Christopher Allen with Chris Howe_
+### _by [Wolf McNally](https://www.github.com/wolfmcnally) and [Christopher Allen](https://www.github.com/ChristopherA)_ with [Chris Howe](https://www.github.com/howech)
+
+* <img src="https://github.com/BlockchainCommons/crypto-commons/blob/master/images/logos/crypto-commons-super-simple.png" width=16 valign="bottom">&nbsp;&nbsp; ***part of the [crypto commons](https://github.com/BlockchainCommons/crypto-commons/blob/master/README.md) technology family***
 
 **Blockchain Commons Shamir Secret Sharing** is an implementation of Shamir Secret Sharing for use in [Blockchain Commons](https://www.BlockchainCommons.com) Software Projects.
 
