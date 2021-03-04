@@ -14,30 +14,8 @@
 
 This sequence also runs the module's unit tests.
 
-### MacOS
-
 ```bash
 $ ./configure
-$ make check
-$ sudo make install
-```
-
-### Linux
-
-Make sure you have llvm/clang.
-
-#### Ubuntu and Debian
-
-```bash
-$ sudo apt-get install make
-
-$ wget https://apt.llvm.org/llvm.sh
-$ chmod +x llvm.sh
-$ sudo ./llvm.sh 10  # version 10
-```
-
-```bash
-$ export CC="clang-10" && ./configure
 $ make check
 $ sudo make install
 ```
@@ -57,9 +35,12 @@ Before accepting a PR that can affect build or unit tests, make sure the followi
 
 ```bash
 $ ./configure
+$ make lint
 $ make distcheck
 $ make distclean
 ```
+
+`make lint` uses [Cppcheck](https://en.wikipedia.org/wiki/Cppcheck) to perform static analysis on the code. All PRs should pass with no warnings.
 
 `make distcheck` builds a distribution tarball, unpacks it, then configures, builds, and runs unit tests from it, then performs an install and uninstall from a non-system directory and makes sure the uninstall leaves it clean. `make distclean` removes all known byproduct files, and unless you've added files of your own, should leave the directory in a state that could be tarballed for distribution. After a `make distclean` you'll have to run `./configure` again.
 
@@ -80,9 +61,10 @@ This table below also establishes provenance (repository of origin, permalink, a
 
 ### Used with…
 
-These are other projects that work with or leverage `$projectname`:
+These are other projects that work with or leverage `bc-shamir`:
 
 - [bc-slip39](https://github.com/BlockchainCommons/bc-slip39) — Blockchain Common's SLIP39 implementation.
+- [lethekit](https://github.com/BlockchainCommons/bc-lethekit) — Open source DIY hardware box for offline cryptographic tools by Blockchain Commons
 
 ### Derived from…
 
