@@ -7,7 +7,7 @@
 
 #include <string.h>
 
-#ifdef ARDUINO
+#if defined(ARDUINO) || defined(__EMSCRIPTEN__)
 #include "bc-crypto-base.h"
 #else
 #include <bc-crypto-base/bc-crypto-base.h>
