@@ -49,8 +49,14 @@ int32_t split_secret(
     void* ctx,
     void (*random_generator)(uint8_t *, size_t, void*)
 ) {
-    if( shard_count > MAX_SHARD_COUNT) {
+    if(shard_count > MAX_SHARD_COUNT) {
         return ERROR_TOO_MANY_SHARDS;
+    } else if(secret_length > 32) {
+        return ERROR_SECRET_TOO_LONG;
+    } else if(secret_length < 16) {
+        return ERROR_SECRET_TOO_SHORT;
+    } else if((secret_length & 1) != 0) {
+        return ERROR_SECRET_NOT_EVEN_LEN;
     }
 
     if(threshold == 1) {
