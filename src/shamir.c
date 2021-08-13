@@ -50,13 +50,13 @@ int32_t split_secret(
     void (*random_generator)(uint8_t *, size_t, void*)
 ) {
     if(shard_count > MAX_SHARD_COUNT) {
-        return ERROR_TOO_MANY_SHARDS;
+        return SHAMIR_ERROR_TOO_MANY_SHARDS;
     } else if(secret_length > 32) {
-        return ERROR_SECRET_TOO_LONG;
+        return SHAMIR_ERROR_SECRET_TOO_LONG;
     } else if(secret_length < 16) {
-        return ERROR_SECRET_TOO_SHORT;
+        return SHAMIR_ERROR_SECRET_TOO_SHORT;
     } else if((secret_length & 1) != 0) {
-        return ERROR_SECRET_NOT_EVEN_LEN;
+        return SHAMIR_ERROR_SECRET_NOT_EVEN_LEN;
     }
 
     if(threshold == 1) {
@@ -96,7 +96,7 @@ int32_t split_secret(
 
         for(uint8_t i=threshold -2; i<shard_count; ++i, share += secret_length) {
             if(interpolate(n, x, secret_length, y, i, share) < 0) {
-                return ERROR_INTERPOLATION_FAILURE;
+                return SHAMIR_ERROR_INTERPOLATION_FAILURE;
             }
         }
 
@@ -134,7 +134,7 @@ int32_t recover_secret(
         memset(digest, 0, sizeof(digest));
         memset(verify, 0, sizeof(verify));
 
-        return ERROR_INTERPOLATION_FAILURE;
+        return SHAMIR_ERROR_INTERPOLATION_FAILURE;
     }
 
     create_digest(digest+4, share_length-4, secret, share_length, verify);
@@ -148,7 +148,7 @@ int32_t recover_secret(
     memset(verify, 0, sizeof(verify));
 
     if(!valid) {
-        return ERROR_CHECKSUM_FAILURE;
+        return SHAMIR_ERROR_CHECKSUM_FAILURE;
     }
 
     return share_length;

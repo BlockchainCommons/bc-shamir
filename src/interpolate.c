@@ -131,7 +131,7 @@ int16_t interpolate(
     uint8_t* result      // space for yl bytes of results
 ) {
     if(yl > 32) {
-        return ERROR_SECRET_TOO_LONG;
+        return SHAMIR_ERROR_SECRET_TOO_LONG;
     }
 
     // The hazmat gf256 implementation needs the y-coordinate data
