@@ -41,7 +41,7 @@ uint8_t* create_digest(
  * shard_count shares such that threshold of them must be presented
  * to recover the secret.
  *
- * returns: the number of shards created
+ * returns: the number of shards created, or a negative value if there was an error
  *
  * inputs: threshold: number of shards required to recover secret
  *         shard_count: number of shards to generate
