@@ -9,9 +9,9 @@
 #define SHAMIR_H
 
 #include <stdint.h>
-#include "shamir-errors.h"
+#include "shamir-constants.h"
 
-#define MAX_SHARD_COUNT 16
+#define SHAMIR_MAX_SHARD_COUNT 16
 #define SECRET_INDEX 255
 #define DIGEST_INDEX 254
 

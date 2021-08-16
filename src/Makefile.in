@@ -39,10 +39,10 @@ all lib: $(libname)
 $(libname): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
-interpolate.o: interpolate.h hazmat.h shamir-errors.h
-shamir.o: shamir.h hazmat.h interpolate.h shamir-errors.h
+interpolate.o: interpolate.h hazmat.h shamir-constants.h
+shamir.o: shamir.h hazmat.h interpolate.h shamir-constants.h
 
-HEADERS = bc-shamir.h shamir.h interpolate.h hazmat.h shamir-errors.h
+HEADERS = bc-shamir.h shamir.h interpolate.h hazmat.h shamir-constants.h
 
 libdir = $(DESTDIR)$(prefix)/lib
 includedir = $(DESTDIR)$(prefix)/include/$(package)
@@ -61,7 +61,7 @@ uninstall:
 	rm -f $(includedir)/interpolate.h
 	rm -f $(includedir)/hazmat.h
 	rm -f $(includedir)/shamir.h
-	rm -f $(includedir)/shamir-errors.h
+	rm -f $(includedir)/shamir-constants.h
 	-rmdir $(libdir) >/dev/null 2>&1
 	-rmdir $(includedir) >/dev/null 2>&1
 
