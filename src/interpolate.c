@@ -9,9 +9,7 @@
 
 #include "interpolate.h"
 #include "hazmat.h"
-#include "shamir-errors.h"
-
-#define SECRET_SIZE 32
+#include "shamir-constants.h"
 
 /*
 * calculate the lagrange basis coefficients for the lagrange polynomial
@@ -130,19 +128,19 @@ int16_t interpolate(
     uint8_t x,           // x coordinate to interpolate
     uint8_t* result      // space for yl bytes of results
 ) {
-    if(yl > 32) {
+    if(yl > SHAMIR_MAX_SECRET_SIZE) {
         return SHAMIR_ERROR_SECRET_TOO_LONG;
     }
 
     // The hazmat gf256 implementation needs the y-coordinate data
     // to be in 32-byte blocks
     uint8_t *y[n];
-    uint8_t yv[SECRET_SIZE*n];
-    uint8_t values[SECRET_SIZE];
+    uint8_t yv[SHAMIR_MAX_SECRET_SIZE*n];
+    uint8_t values[SHAMIR_MAX_SECRET_SIZE];
 
-    memset(yv,0,SECRET_SIZE*n);
+    memset(yv,0,SHAMIR_MAX_SECRET_SIZE*n);
     for(uint8_t i=0; i<n; i++) {
-        y[i] = &yv[SECRET_SIZE*i];
+        y[i] = &yv[SHAMIR_MAX_SECRET_SIZE*i];
         memcpy(y[i], yij[i], yl);
     }
 

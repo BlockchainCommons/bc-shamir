@@ -49,13 +49,13 @@ int32_t split_secret(
     void* ctx,
     void (*random_generator)(uint8_t *, size_t, void*)
 ) {
-    if(shard_count > MAX_SHARD_COUNT) {
+    if(shard_count > SHAMIR_MAX_SHARD_COUNT) {
         return SHAMIR_ERROR_TOO_MANY_SHARDS;
-    } else if(secret_length > 32) {
+    } else if(secret_length > SHAMIR_MAX_SECRET_SIZE) {
         return SHAMIR_ERROR_SECRET_TOO_LONG;
-    } else if(secret_length < 16) {
+    } else if(secret_length < SHAMIR_MIN_SECRET_SIZE) {
         return SHAMIR_ERROR_SECRET_TOO_SHORT;
-    } else if((secret_length & 1) != 0) {
+    } else if(secret_length & 1) {
         return SHAMIR_ERROR_SECRET_NOT_EVEN_LEN;
     }
 
