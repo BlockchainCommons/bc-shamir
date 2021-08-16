@@ -11,6 +11,12 @@
 #include "hazmat.h"
 #include "shamir-constants.h"
 
+#if defined(ARDUINO) || defined(__EMSCRIPTEN__)
+#include "bc-crypto-base.h"
+#else
+#include <bc-crypto-base/bc-crypto-base.h>
+#endif
+
 /*
 * calculate the lagrange basis coefficients for the lagrange polynomial
 * defined byt the x coordinates xc at the value x.
@@ -40,7 +46,7 @@ hazmat_lagrange_basis(uint8_t *values,
 
     uint32_t numerator[8], denominator[8], temp[8];
 
-    memset(xx, 0, sizeof(xx));
+    memzero(xx, sizeof(xx));
     for(i=0;i<n; ++i) {
         xx[i] = xc[i];
     }
@@ -138,7 +144,7 @@ int16_t interpolate(
     uint8_t yv[SHAMIR_MAX_SECRET_SIZE*n];
     uint8_t values[SHAMIR_MAX_SECRET_SIZE];
 
-    memset(yv,0,SHAMIR_MAX_SECRET_SIZE*n);
+    memzero(yv,SHAMIR_MAX_SECRET_SIZE*n);
     for(uint8_t i=0; i<n; i++) {
         y[i] = &yv[SHAMIR_MAX_SECRET_SIZE*i];
         memcpy(y[i], yij[i], yl);
@@ -163,13 +169,13 @@ int16_t interpolate(
     memcpy(result, values, yl);
 
     // clean up stack
-    memset(lagrange, 0 , sizeof(lagrange));
-    memset(y_slice, 0, sizeof(y_slice));
-    memset(result_slice, 0, sizeof(result_slice));
-    memset(temp, 0, sizeof(temp));
-    memset(y, 0, sizeof(y));
-    memset(yv, 0, sizeof(yv));
-    memset(values, 0, sizeof(values));
+    memzero(lagrange, sizeof(lagrange));
+    memzero(y_slice, sizeof(y_slice));
+    memzero(result_slice, sizeof(result_slice));
+    memzero(temp, sizeof(temp));
+    memzero(y, sizeof(y));
+    memzero(yv, sizeof(yv));
+    memzero(values, sizeof(values));
 
     return yl;
 }

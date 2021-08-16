@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "Makefile.in": "makefile",
-        "*.h": "c"
+        "*.h": "c",
+        "ratio": "c"
     }
 }

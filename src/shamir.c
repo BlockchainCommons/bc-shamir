@@ -100,9 +100,9 @@ int32_t split_secret(
             }
         }
 
-        memset(digest, 0, sizeof(digest));
-        memset(x, 0, sizeof(x));
-        memset(y, 0, sizeof(y));
+        memzero(digest, sizeof(digest));
+        memzero(x, sizeof(x));
+        memzero(y, sizeof(y));
     }
     return shard_count;
 }
@@ -130,9 +130,9 @@ int32_t recover_secret(
     if( interpolate(threshold, x, share_length, shares, DIGEST_INDEX, digest) < 0 ||
         interpolate(threshold, x, share_length, shares, SECRET_INDEX, secret) < 0
     ) {
-        memset(secret, 0, sizeof(digest));
-        memset(digest, 0, sizeof(digest));
-        memset(verify, 0, sizeof(verify));
+        memzero(secret, sizeof(digest));
+        memzero(digest, sizeof(digest));
+        memzero(verify, sizeof(verify));
 
         return SHAMIR_ERROR_INTERPOLATION_FAILURE;
     }
@@ -144,8 +144,8 @@ int32_t recover_secret(
     }
 
 
-    memset(digest, 0, sizeof(digest));
-    memset(verify, 0, sizeof(verify));
+    memzero(digest, sizeof(digest));
+    memzero(verify, sizeof(verify));
 
     if(!valid) {
         return SHAMIR_ERROR_CHECKSUM_FAILURE;
