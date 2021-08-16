@@ -24,10 +24,16 @@
 #include <string.h>
 #include "hazmat.h"
 
+#if defined(ARDUINO) || defined(__EMSCRIPTEN__)
+#include "bc-crypto-base.h"
+#else
+#include <bc-crypto-base/bc-crypto-base.h>
+#endif
+
 void
 bitslice(uint32_t r[8], const uint8_t x[32])
 {
-    memset(r, 0, sizeof(uint32_t[8]));
+    memzero(r, sizeof(uint32_t[8]));
     for (size_t arr_idx = 0; arr_idx < 32; arr_idx++) {
         uint32_t cur = (uint32_t) x[arr_idx];
         for (size_t bit_idx = 0; bit_idx < 8; bit_idx++) {
@@ -40,7 +46,7 @@ bitslice(uint32_t r[8], const uint8_t x[32])
 void
 unbitslice(uint8_t r[32], const uint32_t x[8])
 {
-    memset(r, 0, sizeof(uint8_t[32]));
+    memzero(r, sizeof(uint8_t[32]));
     for (size_t bit_idx = 0; bit_idx < 8; bit_idx++) {
         uint32_t cur = (uint32_t) x[bit_idx];
         for (size_t arr_idx = 0; arr_idx < 32; arr_idx++) {
@@ -288,8 +294,8 @@ gf256_inv(uint32_t r[8], uint32_t x[8])
 		bitslice_setall(x, unbitsliced_x);
 
 		/* Calculate y */
-		memset(y, 0, sizeof(y));
-		memset(xpow, 0, sizeof(xpow));
+		memzero(y, sizeof(y));
+		memzero(xpow, sizeof(xpow));
 		xpow[0] = ~0;
 		gf256_add(y, poly0);
 		for (coeff_idx = 0; coeff_idx < (k-1); coeff_idx++) {
@@ -323,8 +329,8 @@ gf256_inv(uint32_t r[8], uint32_t x[8])
 
 	/* Use Lagrange basis polynomials to calculate the secret coefficient */
 	for (idx1 = 0; idx1 < k; idx1++) {
-		memset(num, 0, sizeof(num));
-		memset(denom, 0, sizeof(denom));
+		memzero(num, sizeof(num));
+		memzero(denom, sizeof(denom));
 		num[0] = ~0; /* num is the numerator (=1) */
 		denom[0] = ~0; /* denom is the numerator (=1) */
 		for (idx2 = 0; idx2 < k; idx2++) {
