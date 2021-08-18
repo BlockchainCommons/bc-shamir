@@ -12,8 +12,6 @@
 extern "C" {
 #endif
 
-#include "hazmat.h"
-#include "interpolate.h"
 #include "shamir.h"
 
 #ifdef __cplusplus

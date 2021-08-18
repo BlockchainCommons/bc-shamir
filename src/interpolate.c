@@ -32,7 +32,7 @@
 *   values[i] =  | |   -------------
 *              j != i  (xc[i]-xc[j])
 */
-void
+static void
 hazmat_lagrange_basis(uint8_t *values,
                    uint8_t n,
                    const uint8_t *xc,
