@@ -10,27 +10,6 @@
 
 #include "hazmat.h"
 
-/*
- * calculate the lagrange basis coefficients for the lagrange polynomial
- * defined byt the x coordinates xc at the value x.
- *
- * inputs: values: pointer to an array to write the values
- *         n: number of points - length of the xc array, 0 < n <= 32
- *         xc: array of x components to use as interpolating points
- *         x: x coordinate to evaluate lagrange polynomials at
- *
- * After the function runs, the values array should hold data satisfying
- * the following:
- *                ---     (x-xc[j])
- *   values[i] =  | |   -------------
- *              j != i  (xc[i]-xc[j])
- */
-void
-hazmat_lagrange_basis(uint8_t *values,
-                   uint8_t n,
-                   const uint8_t *xc,
-                   uint8_t x);
-
 /**
  * safely interpolate the polynomial going through
  * the points (x0 [y0_0 y0_1 y0_2 ... y0_31]) , (x1 [y1_0 ...]), ...
