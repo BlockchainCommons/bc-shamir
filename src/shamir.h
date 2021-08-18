@@ -43,7 +43,7 @@ uint8_t* create_digest(
  *
  * returns: the number of shards created, or a negative value if there was an error
  *
- * inputs: threshold: number of shards required to recover secret
+ * inputs: threshold: number of shards required to recover secret. Must be 1 <= threshold <= shard_count.
  *         shard_count: number of shards to generate
  *         secret: array of bytes representing the secret
  *         secret_length: length of the secret array. must be >= 16, <= 32 and even.

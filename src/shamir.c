@@ -51,6 +51,8 @@ int32_t split_secret(
 ) {
     if(shard_count > SHAMIR_MAX_SHARD_COUNT) {
         return SHAMIR_ERROR_TOO_MANY_SHARDS;
+    } else if(threshold < 1 || threshold > shard_count) {
+        return SHAMIR_ERROR_INVALID_THRESHOLD;
     } else if(secret_length > SHAMIR_MAX_SECRET_SIZE) {
         return SHAMIR_ERROR_SECRET_TOO_LONG;
     } else if(secret_length < SHAMIR_MIN_SECRET_SIZE) {
