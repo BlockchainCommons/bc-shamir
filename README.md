@@ -63,7 +63,7 @@ This table below also establishes provenance (repository of origin, permalink, a
 
 These are other projects that work with or leverage `bc-shamir`:
 
-- [bc-slip39](https://github.com/BlockchainCommons/bc-slip39) — Blockchain Common's SLIP39 implementation.
+- [bc-slip39](https://github.com/BlockchainCommons/bc-slip39) — Blockchain Common's SLIP-39 implementation.
 - [lethekit](https://github.com/BlockchainCommons/bc-lethekit) — Open source DIY hardware box for offline cryptographic tools by Blockchain Commons
 
 ### Derived from…
