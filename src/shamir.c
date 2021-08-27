@@ -37,21 +37,14 @@ uint8_t * create_digest(
     return result;
 }
 
-
-//////////////////////////////////////////////////
-// shamir sharing
-int32_t split_secret(
+static int32_t validate_parameters(
     uint8_t threshold,
-    uint8_t shard_count,
-    const uint8_t *secret,
-    uint32_t secret_length,
-    uint8_t *result,
-    void* ctx,
-    void (*random_generator)(uint8_t *, size_t, void*)
+    uint8_t share_count,
+    uint32_t secret_length
 ) {
-    if(shard_count > SHAMIR_MAX_SHARD_COUNT) {
-        return SHAMIR_ERROR_TOO_MANY_SHARDS;
-    } else if(threshold < 1 || threshold > shard_count) {
+    if(share_count > SHAMIR_MAX_SHARE_COUNT) {
+        return SHAMIR_ERROR_TOO_MANY_SHARES;
+    } else if(threshold < 1 || threshold > share_count) {
         return SHAMIR_ERROR_INVALID_THRESHOLD;
     } else if(secret_length > SHAMIR_MAX_SECRET_SIZE) {
         return SHAMIR_ERROR_SECRET_TOO_LONG;
@@ -60,16 +53,34 @@ int32_t split_secret(
     } else if(secret_length & 1) {
         return SHAMIR_ERROR_SECRET_NOT_EVEN_LEN;
     }
+    return 0;
+}
+
+//////////////////////////////////////////////////
+// shamir sharing
+int32_t split_secret(
+    uint8_t threshold,
+    uint8_t share_count,
+    const uint8_t *secret,
+    uint32_t secret_length,
+    uint8_t *result,
+    void* ctx,
+    void (*random_generator)(uint8_t *, size_t, void*)
+) {
+    int32_t err = validate_parameters(threshold, share_count, secret_length);
+    if(err) {
+        return err;
+    }
 
     if(threshold == 1) {
-        // just return shard_count copies of the secret
+        // just return share_count copies of the secret
         uint8_t *share = result;
-        for(uint8_t i=0; i< shard_count; ++i, share += secret_length) {
+        for(uint8_t i=0; i< share_count; ++i, share += secret_length) {
             for(uint8_t j=0; j<secret_length; ++j) {
                 share[j] = secret[j];
             }
         }
-        return shard_count;
+        return share_count;
     } else {
         uint8_t digest[secret_length];
         uint8_t x[16];
@@ -96,7 +107,7 @@ int32_t split_secret(
         y[n] = secret;
         n+=1;
 
-        for(uint8_t i=threshold -2; i<shard_count; ++i, share += secret_length) {
+        for(uint8_t i=threshold -2; i<share_count; ++i, share += secret_length) {
             if(interpolate(n, x, secret_length, y, i, share) < 0) {
                 return SHAMIR_ERROR_INTERPOLATION_FAILURE;
             }
@@ -106,11 +117,11 @@ int32_t split_secret(
         memzero(x, sizeof(x));
         memzero(y, sizeof(y));
     }
-    return shard_count;
+    return share_count;
 }
 
 
-// returns the number of bytes written to the secret array, or -1 if there was an error
+// returns the number of bytes written to the secret array, or a negative value if there was an error
 int32_t recover_secret(
     uint8_t threshold,
     const uint8_t *x,
@@ -118,6 +129,11 @@ int32_t recover_secret(
     uint32_t share_length,
     uint8_t *secret
 ) {
+    int32_t err = validate_parameters(threshold, threshold, share_length);
+    if(err) {
+        return err;
+    }
+
     uint8_t digest[share_length];
     uint8_t verify[4];
     uint8_t valid = 1;

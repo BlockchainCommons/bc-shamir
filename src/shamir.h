@@ -11,12 +11,12 @@
 #include <stdint.h>
 #include "shamir-constants.h"
 
-#define SHAMIR_MAX_SHARD_COUNT 16
+#define SHAMIR_MAX_SHARE_COUNT 16
 #define SECRET_INDEX 255
 #define DIGEST_INDEX 254
 
 /**
- * creates a digest used to help valididate secret reconstruction (see slip-39 docs)
+ * creates a digest used to help valididate secret reconstruction (see SLIP-39 docs)
  *
  * returns: a pointer to the resulting 4-byte digest
  * inputs: random_data: array of data to create a digest for
@@ -34,17 +34,17 @@ uint8_t* create_digest(
 );
 
 //////////////////////////////////////////////////
-// slip39 shamir sharing
+// Shamir Secret Sharing (based on SLIP-39)
 
 /**
- * used slip39's version of shamir sharing to split a secret up into
- * shard_count shares such that threshold of them must be presented
+ * uses SLIP-39's strategy for shamir sharing to split a secret up into
+ * share_count shares such that threshold of them must be presented
  * to recover the secret.
  *
- * returns: the number of shards created, or a negative value if there was an error
+ * returns: the number of shares created, or a negative value if there was an error
  *
- * inputs: threshold: number of shards required to recover secret. Must be 1 <= threshold <= shard_count.
- *         shard_count: number of shards to generate
+ * inputs: threshold: number of shares required to recover secret. Must be 1 <= threshold <= share_count.
+ *         share_count: number of shares to generate
  *         secret: array of bytes representing the secret
  *         secret_length: length of the secret array. must be >= 16, <= 32 and even.
  *         result: place to store the resulting shares. Must be able to hold
@@ -53,7 +53,7 @@ uint8_t* create_digest(
  */
 int32_t split_secret(
     uint8_t threshold,
-    uint8_t shard_count,
+    uint8_t share_count,
     const uint8_t *secret,
     uint32_t secret_length,
     uint8_t *result,
@@ -62,21 +62,21 @@ int32_t split_secret(
 );
 
 /**
- * recover a secret from shards
+ * recover a secret from shares
  *
  * returns: the number of bytes written to the secret array, or a negative value if there was an error
  *
- * inputs: threshold: number of shards required
- *         x: array of x values  (length threshold)
- *         shards: array (length threshold) of pointers to y value arrays
- *         shard_length: number of bytes in each y value array
- *         secret: array for writing results (must be at least shard_length long)
+ * inputs: threshold: number of shares required and provided to this function
+ *         x: array of x values (length: threshold)
+ *         shares: array (length: threshold) of pointers to y value arrays
+ *         share_length: number of bytes in each y value array
+ *         secret: array for writing results (must be at least share_length long)
  */
 int32_t recover_secret(
     uint8_t threshold,
     const uint8_t *x,
-    const uint8_t **shards,
-    uint32_t shard_length,
+    const uint8_t **shares,
+    uint32_t share_length,
     uint8_t *secret
 );
 

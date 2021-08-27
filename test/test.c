@@ -12,15 +12,15 @@
 #include "../src/bc-shamir.h"
 #include "test-utils.h"
 
-static size_t _test_split_secret(const char* secret, uint8_t threshold, uint8_t shard_count, char** output_shares) {
+static size_t _test_split_secret(const char* secret, uint8_t threshold, uint8_t share_count, char** output_shares) {
   uint8_t* secret_data;
   size_t secret_len = hex_to_data(secret, &secret_data);
-  size_t result_len = shard_count * secret_len;
+  size_t result_len = share_count * secret_len;
   uint8_t result_data[result_len];
-  int32_t result = split_secret(threshold, shard_count, secret_data, secret_len, result_data, NULL, fake_random);
-  assert(result == shard_count);
+  int32_t result = split_secret(threshold, share_count, secret_data, secret_len, result_data, NULL, fake_random);
+  assert(result == share_count);
 
-  for(int i = 0; i < shard_count; i++) {
+  for(int i = 0; i < share_count; i++) {
     size_t offset = i * secret_len;
     output_shares[i] = data_to_hex(result_data + offset, secret_len);
   }
@@ -49,13 +49,13 @@ static char* _test_recover_secret(uint8_t threshold, const char** recovery_share
   return data_to_hex(secret_data, share_len);
 }
 
-static void _test_shamir(const char* secret, uint8_t threshold, uint8_t shard_count, const uint8_t* recovery_share_indexes) {
+static void _test_shamir(const char* secret, uint8_t threshold, uint8_t share_count, const uint8_t* recovery_share_indexes) {
   // printf("secret: %s\n", secret);
 
-  char* output_shares[shard_count];
-  size_t secret_len = _test_split_secret(secret, threshold, shard_count, output_shares);
+  char* output_shares[share_count];
+  size_t secret_len = _test_split_secret(secret, threshold, share_count, output_shares);
 
-  // for(int i = 0; i < shard_count; i++) {
+  // for(int i = 0; i < share_count; i++) {
   //   printf("%d: %s\n", i, output_shares[i]);
   // }
 
@@ -67,7 +67,7 @@ static void _test_shamir(const char* secret, uint8_t threshold, uint8_t shard_co
   char* out_secret = _test_recover_secret(threshold, (const char **)recovery_shares, recovery_share_indexes);
   // printf("out_secret: %s\n", out_secret);
 
-  for(int i = 0; i < shard_count; i++) {
+  for(int i = 0; i < share_count; i++) {
     free(output_shares[i]);
   }
 
