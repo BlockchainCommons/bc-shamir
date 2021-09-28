@@ -1,4 +1,4 @@
-# Security Review for `bc-shamir` [0.4.0](https://github.com/BlockchainCommons/bc-shamir/releases/tag/0.4.0) and `bc-sskr` [bc-sskr v0.3.2](https://github.com/BlockchainCommons/bc-sskr/tree/0.3.2)
+# Security Review for `bc-shamir` [0.4.0](https://github.com/BlockchainCommons/bc-shamir/releases/tag/0.4.0) and `bc-sskr` [0.3.2](https://github.com/BlockchainCommons/bc-sskr/tree/0.3.2)
 
 # `bc-shamir/bc-sskr` Security Review
 
