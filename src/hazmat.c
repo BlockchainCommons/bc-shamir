@@ -30,63 +30,108 @@
 #include <bc-crypto-base/bc-crypto-base.h>
 #endif
 
-void
-bitslice(uint32_t r[8], const uint8_t x[32])
-{
+/**
+ * bitslice - Transpose bits of 32 bytes to form 8 32-bit words.
+ *
+ * This function transposes the bits of an input 32-byte array x into
+ * 8 32-bit words, stored in the output array r.
+ *
+ * @param r [out] 8-element array of 32-bit words, where the transposed bits will be stored.
+ * @param x [in] 32-element byte array to be transposed.
+ */
+void bitslice(uint32_t r[8], const uint8_t x[32]) {
+    // Securely wipe the memory of the output array
     memzero(r, sizeof(uint32_t[8]));
+
+    // Iterate over each byte in the input array
     for (size_t arr_idx = 0; arr_idx < 32; arr_idx++) {
         uint32_t cur = (uint32_t) x[arr_idx];
+
+        // Iterate over each bit in the current byte
         for (size_t bit_idx = 0; bit_idx < 8; bit_idx++) {
+            // Transpose the current bit into the appropriate position in the output array
             r[bit_idx] |= ((cur & (1 << bit_idx)) >> bit_idx) << arr_idx;
         }
     }
 }
 
-
-void
-unbitslice(uint8_t r[32], const uint32_t x[8])
-{
+/**
+ * unbitslice - Reverse the bitslicing operation performed by bitslice().
+ *
+ * This function reverses the bitslicing operation, converting 8 32-bit words
+ * back into a 32-byte array. It is essentially the inverse operation of the bitslice() function.
+ *
+ * @param r [out] 32-element byte array, where the unbitsliced data will be stored.
+ * @param x [in] 8-element array of 32-bit words to be unbitsliced.
+ */
+void unbitslice(uint8_t r[32], const uint32_t x[8]) {
+    // Securely wipe the memory of the output array
     memzero(r, sizeof(uint8_t[32]));
+
+    // Iterate over each 32-bit word in the input array
     for (size_t bit_idx = 0; bit_idx < 8; bit_idx++) {
         uint32_t cur = (uint32_t) x[bit_idx];
+
+        // Iterate over each bit in the current 32-bit word
         for (size_t arr_idx = 0; arr_idx < 32; arr_idx++) {
-            r[arr_idx] |= ((cur & (((uint32_t)1) << arr_idx)) >> arr_idx) << bit_idx;
+            // Transpose the current bit into the appropriate position in the output array
+            r[arr_idx] |= ((cur & (((uint32_t) 1) << arr_idx)) >> arr_idx) << bit_idx;
         }
     }
 }
 
-
-void
-bitslice_setall(uint32_t r[8], const uint8_t x)
-{
-    size_t idx;
-    for (idx = 0; idx < 8; idx++) {
+/**
+ * bitslice_setall - Set all bits in an 8-element 32-bit words array based on the input byte.
+ *
+ * This function sets the bits in the output array 'r' based on the input byte 'x'.
+ * For each bit 'i' in 'x', if it is set, the corresponding 32-bit word in 'r' will have all bits
+ * set; otherwise, the corresponding word will have all bits unset.
+ *
+ * @param r [out] 8-element array of 32-bit words, where the resulting data will be stored.
+ * @param x [in] Input byte to determine the bit values in the output array.
+ */
+void bitslice_setall(uint32_t r[8], const uint8_t x) {
+    // Iterate over each bit in the input byte
+    for (size_t idx = 0; idx < 8; idx++) {
+        // Set all bits in r[idx] based on the corresponding bit in x
         // cppcheck-suppress shiftTooManyBitsSigned
-        r[idx] = ((int32_t) ((x & (((uint32_t)1) << idx)) << (31 - idx))) >> 31;
+        r[idx] = ((int32_t)((x & (((uint32_t) 1) << idx)) << (31 - idx))) >> 31;
     }
 }
 
-
-/*
- * Add (XOR) `r` with `x` and store the result in `r`.
+/**
+ * gf256_add - Add (XOR) two 8-element arrays of 32-bit words element-wise.
+ *
+ * This function performs an element-wise addition (XOR) of the input arrays 'r' and 'x'
+ * and stores the result back in the 'r' array. The operation is performed in GF(2^8).
+ *
+ * @param r [in, out] 8-element array of 32-bit words, where one of the input arrays and the result
+ * will be stored.
+ * @param x [in] 8-element array of 32-bit words, the other input array.
  */
-void
-gf256_add(uint32_t r[8], const uint32_t x[8])
-{
-    size_t idx;
-    for (idx = 0; idx < 8; idx++) r[idx] ^= x[idx];
+void gf256_add(uint32_t r[8], const uint32_t x[8]) {
+    // Iterate over each element in the input arrays
+    for (size_t idx = 0; idx < 8; idx++) {
+        // Perform element-wise XOR (addition in GF(2^8)) and store the result in r
+        r[idx] ^= x[idx];
+    }
 }
 
-
-/*
- * Safely multiply two bitsliced polynomials in GF(2^8) reduced by
- * x^8 + x^4 + x^3 + x + 1. `r` and `a` may overlap, but overlapping of `r`
- * and `b` will produce an incorrect result! If you need to square a polynomial
- * use `gf256_square` instead.
+/**
+ * gf256_mul - Multiply two bitsliced polynomials in GF(2^8) reduced by x^8 + x^4 + x^3 + x + 1.
+ *
+ * This function multiplies two bitsliced polynomials 'a' and 'b' in GF(2^8) and stores the result
+ * in the output array 'r'. The multiplication is performed using Russian Peasant multiplication
+ * and the polynomials are reduced by x^8 + x^4 + x^3 + x + 1.
+ *
+ * Note: 'r' and 'a' may overlap, but overlapping of 'r' and 'b' will produce an incorrect result!
+ * If you need to square a polynomial, use `gf256_square` instead.
+ *
+ * @param r [out] 8-element array of 32-bit words, where the resulting data will be stored.
+ * @param a [in] 8-element array of 32-bit words, one of the input polynomials.
+ * @param b [in] 8-element array of 32-bit words, the other input polynomial.
  */
-void
-gf256_mul(uint32_t r[8], const uint32_t a[8], const uint32_t b[8])
-{
+void gf256_mul(uint32_t r[8], const uint32_t a[8], const uint32_t b[8]) {
     /* This function implements Russian Peasant multiplication on two
      * bitsliced polynomials.
      *
@@ -193,42 +238,39 @@ gf256_mul(uint32_t r[8], const uint32_t a[8], const uint32_t b[8])
     r[7] ^= a2[0] & b[7];
 }
 
-
 /*
  * Square `x` in GF(2^8) and write the result to `r`. `r` and `x` may overlap.
  */
-void
-gf256_square(uint32_t r[8], const uint32_t x[8])
-{
+void gf256_square(uint32_t r[8], const uint32_t x[8]) {
     uint32_t r8, r10, r12, r14;
     /* Use the Freshman's Dream rule to square the polynomial
      * Assignments are done from 7 downto 0, because this allows the user
      * to execute this function in-place (e.g. `gf256_square(r, r);`).
      */
-    r14  = x[7];
-    r12  = x[6];
-    r10  = x[5];
-    r8   = x[4];
+    r14 = x[7];
+    r12 = x[6];
+    r10 = x[5];
+    r8 = x[4];
     r[6] = x[3];
     r[4] = x[2];
     r[2] = x[1];
     r[0] = x[0];
 
     /* Reduce with  x^8 + x^4 + x^3 + x + 1 until order is less than 8 */
-    r[7]  = r14;  /* r[7] was 0 */
+    r[7] = r14; /* r[7] was 0 */
     r[6] ^= r14;
-    r10  ^= r14;
+    r10 ^= r14;
     /* Skip, because r13 is always 0 */
     r[4] ^= r12;
-    r[5]  = r12;  /* r[5] was 0 */
+    r[5] = r12; /* r[5] was 0 */
     r[7] ^= r12;
-    r8   ^= r12;
+    r8 ^= r12;
     /* Skip, because r11 is always 0 */
     r[2] ^= r10;
-    r[3]  = r10; /* r[3] was 0 */
+    r[3] = r10; /* r[3] was 0 */
     r[5] ^= r10;
     r[6] ^= r10;
-    r[1]  = r14; /* r[1] was 0 */
+    r[1] = r14;  /* r[1] was 0 */
     r[2] ^= r14; /* Substitute r9 by r14 because they will always be equal*/
     r[4] ^= r14;
     r[5] ^= r14;
@@ -238,26 +280,23 @@ gf256_square(uint32_t r[8], const uint32_t x[8])
     r[4] ^= r8;
 }
 
-
 /*
  * Invert `x` in GF(2^8) and write the result to `r`
  */
-void
-gf256_inv(uint32_t r[8], uint32_t x[8])
-{
+void gf256_inv(uint32_t r[8], uint32_t x[8]) {
     uint32_t y[8], z[8];
 
-    gf256_square(y, x); // y = x^2
-    gf256_square(y, y); // y = x^4
-    gf256_square(r, y); // r = x^8
-    gf256_mul(z, r, x); // z = x^9
-    gf256_square(r, r); // r = x^16
-    gf256_mul(r, r, z); // r = x^25
-    gf256_square(r, r); // r = x^50
-    gf256_square(z, r); // z = x^100
-    gf256_square(z, z); // z = x^200
-    gf256_mul(r, r, z); // r = x^250
-    gf256_mul(r, r, y); // r = x^254
+    gf256_square(y, x);  // y = x^2
+    gf256_square(y, y);  // y = x^4
+    gf256_square(r, y);  // r = x^8
+    gf256_mul(z, r, x);  // z = x^9
+    gf256_square(r, r);  // r = x^16
+    gf256_mul(r, r, z);  // r = x^25
+    gf256_square(r, r);  // r = x^50
+    gf256_square(z, r);  // z = x^100
+    gf256_square(z, z);  // z = x^200
+    gf256_mul(r, r, z);  // r = x^250
+    gf256_mul(r, r, y);  // r = x^254
 }
 
 #if 0
